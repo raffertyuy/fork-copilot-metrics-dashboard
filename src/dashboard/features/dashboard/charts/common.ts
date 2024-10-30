@@ -150,14 +150,6 @@ export const computeActiveUserAverage = (
   return averageActiveUsers;
 };
 
-export const computeAdoptionRate = (seatManagement: any) => {
-  const adoptionRate =
-    (seatManagement.seat_breakdown.active_this_cycle /
-      seatManagement.seat_breakdown.total) *
-    100;
-  return adoptionRate;
-};
-
 export const computeCumulativeAcceptanceAverage = (
   filteredData: CopilotUsageOutput[]
 ) => {

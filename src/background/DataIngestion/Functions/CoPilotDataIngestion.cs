@@ -23,7 +23,7 @@ public class CoPilotDataIngestion
     TimerInfo myTimer)
     {
         _logger.LogInformation($"GitHubCopilotDataIngestion timer trigger function executed at: {DateTime.Now}");
-        List<CopilotUsage> usage = await usageClient.GetCopilotMetricsForOrgsAsync();
+        List<CopilotUsage> usage = await usageClient.GetCopilotMetricsForEnterpriseAsync();
 
         if (myTimer.ScheduleStatus is not null)
         {

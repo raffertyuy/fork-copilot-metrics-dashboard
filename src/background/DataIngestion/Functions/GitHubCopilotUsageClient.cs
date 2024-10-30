@@ -14,13 +14,13 @@ namespace Microsoft.DevOpsDashboard.DataIngestion.Functions
             _httpClient = httpClient;
         }
 
-        public async Task<List<CopilotUsage>> GetCopilotMetricsForOrgsAsync()
+        public async Task<List<CopilotUsage>> GetCopilotMetricsForEnterpriseAsync()
         {
-            var organization = Environment.GetEnvironmentVariable("GITHUB_ORGANIZATION");
+            var enterprise = Environment.GetEnvironmentVariable("GITHUB_ENTERPRISE");
             var apiVersion = Environment.GetEnvironmentVariable("GITHUB_API_VERSION");
             var token = Environment.GetEnvironmentVariable("GITHUB_TOKEN");
 
-            _httpClient.BaseAddress = new Uri($"https://api.github.com/orgs/{organization}/copilot/usage");
+            _httpClient.BaseAddress = new Uri($"https://api.github.com/enterprises/{enterprise}/copilot/usage");
             _httpClient.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/vnd.github+json"));
             _httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", token);
             _httpClient.DefaultRequestHeaders.Add("X-GitHub-Api-Version", apiVersion);

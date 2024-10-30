@@ -48,10 +48,10 @@ resource appServicePlan 'Microsoft.Web/serverfarms@2020-06-01' = {
     reserved: true
   }
   sku: {
-    name: 'P0v3'
-    tier: 'Premium0V3'
-    size: 'P0v3'
-    family: 'Pv3'
+    name: 'B1'
+    tier: 'Basic'
+    size: 'B1'
+    family: 'B'
     capacity: 1
   }
   kind: 'linux'
@@ -96,10 +96,6 @@ resource copilotDataFunction 'Microsoft.Web/sites@2023-12-01' = {
         {
           name: 'GITHUB_ENTERPRISE'
           value: githubEnterpriseName
-        }
-        {
-          name: 'GITHUB_ORGANIZATION'
-          value: githubOrganisationName
         }
         {
           name: 'GITHUB_API_VERSION'
@@ -147,10 +143,6 @@ resource webApp 'Microsoft.Web/sites@2020-06-01' = {
         {
           name: 'GITHUB_ENTERPRISE'
           value: githubEnterpriseName
-        }
-        {
-          name: 'GITHUB_ORGANIZATION'
-          value: githubOrganisationName
         }
         {
           name: 'GITHUB_API_VERSION'
@@ -278,6 +270,11 @@ resource cosmosDbAccount 'Microsoft.DocumentDB/databaseAccounts@2023-04-15' = {
       }
     ]
     disableKeyBasedMetadataWriteAccess: true
+    capabilities: [
+      {
+        name: 'EnableServerless'
+      }
+    ]
   }
 }
 

@@ -1,3 +1,13 @@
+# fork-copilot-metrics-dashboard
+This is a fork from the original https://github.com/microsoft/copilot-metrics-dashboard, with the following revisions:
+- Changed from org-level to enterprise-level copilot usage metrics
+- Removed seat usage information (as this requires more code changes from the original)
+- Lowered App service tier from P0v3 to B1
+- Changed CosmosDB capacity to serverless
+- CosmosDB uses serverless
+
+---
+
 # GitHub Copilot Metrics - Dashboard
 
 1. [Introduction](#introduction)
@@ -41,7 +51,6 @@ You will be prompted to provide the following information:
 
 ```
 - GitHub Enterprise name
-- GitHub Organization name
 - GitHub Token
 ```
 

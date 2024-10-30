@@ -1,13 +1,13 @@
 import { ServerActionValidationError } from "./server-action-response";
 
 export const formatResponseError = (
-  organization: string,
+  enterprise: string,
   response: Response
 ): ServerActionValidationError => {
   let message = response.statusText;
 
   if (response.status === 404) {
-    message = `Organization with the name ${organization} was not found`;
+    message = `Enterprise with the name ${enterprise} was not found`;
   }
 
   if (response.status === 401) {

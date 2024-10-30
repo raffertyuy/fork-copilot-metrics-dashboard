@@ -44,17 +44,17 @@ export interface IFilter {
   endDate?: Date;
 }
 
-export const getCopilotMetricsForOrgs = async (
+export const getCopilotMetricsForEnterprise = async (
   filter: IFilter
 ): Promise<ServerActionResponse<CopilotUsageOutput[]>> => {
   try {
     const isCosmosConfig = cosmosConfiguration();
     // If we have the required environment variables, we can use the database
     if (isCosmosConfig) {
-      return getCopilotMetricsForOrgsFromDatabase(filter);
+      return getCopilotMetricsForEnterpriseFromDatabase(filter);
     }
 
-    return getCopilotMetricsForOrgsFromApi();
+    return getCopilotMetricsForEnterpriseFromApi();
   } catch (e) {
     return {
       status: "ERROR",
@@ -63,7 +63,7 @@ export const getCopilotMetricsForOrgs = async (
   }
 };
 
-export const getCopilotMetricsForOrgsFromApi = async (): Promise<
+export const getCopilotMetricsForEnterpriseFromApi = async (): Promise<
   ServerActionResponse<CopilotUsageOutput[]>
 > => {
   const env = ensureGitHubEnvConfig();
@@ -72,11 +72,11 @@ export const getCopilotMetricsForOrgsFromApi = async (): Promise<
     return env;
   }
 
-  const { organization, token, version } = env.response;
+  const { enterprise, token, version } = env.response;
 
   try {
     const response = await fetch(
-      `https://api.github.com/orgs/${organization}/copilot/usage`,
+      `https://api.github.com/enterprises/${enterprise}/copilot/usage`,
       {
         cache: "no-store",
         headers: {
@@ -88,7 +88,7 @@ export const getCopilotMetricsForOrgsFromApi = async (): Promise<
     );
 
     if (!response.ok) {
-      return formatResponseError(organization, response);
+      return formatResponseError(enterprise, response);
     }
 
     const data = await response.json();
@@ -102,7 +102,7 @@ export const getCopilotMetricsForOrgsFromApi = async (): Promise<
   }
 };
 
-export const getCopilotMetricsForOrgsFromDatabase = async (
+export const getCopilotMetricsForEnterpriseFromDatabase = async (
   filter: IFilter
 ): Promise<ServerActionResponse<CopilotUsageOutput[]>> => {
   const client = cosmosClient();
