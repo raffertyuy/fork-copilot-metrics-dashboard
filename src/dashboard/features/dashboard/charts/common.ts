@@ -1,4 +1,5 @@
 import { CopilotUsageOutput } from "../services/copilot-metrics-service";
+import { CopilotSeatsResponse } from "../services/copilot-ent-seat-service";
 import { PieChartData } from "./language";
 
 export interface AcceptanceRateData {
@@ -149,6 +150,15 @@ export const computeActiveUserAverage = (
   const averageActiveUsers = activeUsersSum / filteredData.length;
   return averageActiveUsers;
 };
+
+export const computeAdoptionRate = (
+  enterpriseSeats: CopilotSeatsResponse,
+  active_users: number
+) => {
+  const totalSeats = enterpriseSeats.total_seats;
+
+  return (active_users / totalSeats) * 100;
+}
 
 export const computeCumulativeAcceptanceAverage = (
   filteredData: CopilotUsageOutput[]

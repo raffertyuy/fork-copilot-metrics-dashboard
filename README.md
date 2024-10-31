@@ -2,7 +2,7 @@
 This is a fork from the original https://github.com/microsoft/copilot-metrics-dashboard, with the following revisions:
 - Changed from org-level to enterprise-level copilot usage metrics
 - Removed seat usage information (as this requires more code changes from the original)
-- Lowered App service tier from P0v3 to B1
+- Lowered App service tier from P0v3 to B2
 - Changed CosmosDB capacity to serverless
 - CosmosDB uses serverless
 

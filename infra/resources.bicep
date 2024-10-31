@@ -48,9 +48,9 @@ resource appServicePlan 'Microsoft.Web/serverfarms@2020-06-01' = {
     reserved: true
   }
   sku: {
-    name: 'B1'
+    name: 'B2'
     tier: 'Basic'
-    size: 'B1'
+    size: 'B2'
     family: 'B'
     capacity: 1
   }

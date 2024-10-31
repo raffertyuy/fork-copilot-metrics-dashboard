@@ -3,6 +3,7 @@ import { AcceptanceRate } from "./charts/acceptance-rate";
 import { ActiveUsers } from "./charts/active-users";
 import { Editor } from "./charts/editor";
 import { Language } from "./charts/language";
+import { Stats } from "./charts/stats";
 import { TotalCodeLineSuggestionsAndAcceptances } from "./charts/total-code-line-suggestions-and-acceptances";
 import { TotalSuggestionsAndAcceptances } from "./charts/total-suggestions-and-acceptances";
 import { DataProvider } from "./dashboard-state";
@@ -12,6 +13,7 @@ import {
   getCopilotMetricsForEnterprise,
   IFilter,
 } from "./services/copilot-metrics-service";
+import { getCopilotSeatsForEnterprise } from "./services/copilot-ent-seat-service";
 
 export interface IProps {
   searchParams: IFilter;
@@ -19,21 +21,28 @@ export interface IProps {
 
 export default async function Dashboard(props: IProps) {
   const allDataPromise = getCopilotMetricsForEnterprise(props.searchParams);
-  const [allData] = await Promise.all([allDataPromise]);
+  const usagePromise = getCopilotSeatsForEnterprise();
+  const [allData, usage] = await Promise.all([allDataPromise, usagePromise]);
 
   if (allData.status !== "OK") {
     return <ErrorPage error={allData.errors[0].message} />;
   }
 
+  if (usage.status !== "OK") {
+    return <ErrorPage error={usage.errors[0].message} />;
+  }
+
   return (
     <DataProvider
       copilotUsages={allData.response}
+      enterpriseSeats={usage.response}
     >
       <main className="flex flex-1 flex-col gap-4 md:gap-8 pb-8">
         <Header />
 
         <div className="mx-auto w-full max-w-6xl container">
           <div className="grid grid-cols-1 md:grid-cols-4 gap-6">
+            <Stats />
             <div className="flex justify-end col-span-4">
               <TimeFrameToggle />
             </div>
